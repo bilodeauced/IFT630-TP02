@@ -8,6 +8,8 @@
 #include <vector>
 #include <list>
 
+using namespace std;
+
 // represents a single pixel
 class Node {
 public:
@@ -31,7 +33,7 @@ private:
 public:
 	AStar(int height, int width, int start, int goal);
 	int findPath(string role, vector<char> map);
-	vector<int> getWalkableNeibors(string role, int currentPos);
+	vector<int> getWalkableNeighbors(string role, int currentPos, vector<char>& map);
 	int findNodePosition(vector<Node>& v, Node& n);
 	int findNextMove(Node& currentNode);
 };
