@@ -38,6 +38,19 @@ Map  Map::creerMap(std::string && stringDeCases)
     return Map{ cases, pos - 1, rangee - 1 };
 }
 
+void Map::updateMap(std::string && stringDeCases) {
+	std::stringstream ss{ stringDeCases };
+	std::string tmp;
+	int rangee{};
+	cases.clear();
+	while (std::getline(ss, tmp, '\n')) {
+		++rangee;
+		for (char& c : tmp) {
+			cases.push_back(c);
+		}
+	}
+}
+
 const int Map::obtenirMaxX()
 {
     return maxX;
@@ -60,7 +73,7 @@ char& Map::operator()(Case c)
     return operator()(c.x, c.y);
 }
 
-bool Map::peutBougerRat(Case c, Case nC) 
+bool Map::peutBougerRat(Case c, Case nC)
 {
     int diffX = std::abs(c.x - nC.x);
     int diffY = std::abs(c.y - nC.y);
@@ -95,22 +108,19 @@ ResultatBouger Map::bougerRat(Case c, Case nC)
     {
         char tmp = operator()(nC);
         operator()(c) = CASE_VIDE;
-        if (nC.x == 0 || nC.y == 0 || nC.x == maxX || nC.x == maxY)
+        if (nC.x == 0 || nC.y == 0 || nC.x == maxX || nC.x == maxY) // SORTIE
         {
             operator()(nC) = CASE_VIDE;
             return BOUGER_SORTIE;
         }
-        else
-        {
-            operator()(nC) = CASE_RAT;
-        }
-
         if (tmp == CASE_VIDE) 
         {
+			operator()(nC) = CASE_RAT;
             return BOUGER_CASE_VIDE;
         } 
         if (tmp == CASE_FROMAGE)
         {
+			operator()(nC) = CASE_RAT;
             return BOUGER_FROMAGE;
         }
     }

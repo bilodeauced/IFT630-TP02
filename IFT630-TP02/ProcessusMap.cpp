@@ -37,7 +37,8 @@ void ProcessusMap::exec()
         std::string s = mpi.recevoirToutEmetteur(TAG_REQUETE);
         std::vector<std::string> demande = split(s, SEPARATEUR);
         std::cout << mpi.obtenirRang() << " : messageRecu : " << s << std::endl;
-        if (demande[1] ==  BOUGER_RAT) {
+
+        if (demande[1] == Processus::BOUGER_RAT) {
             Case c = lireCase(demande[2]);
             Case nC = lireCase(demande[3]);
             ResultatBouger res = map.bougerRat(c, nC);
@@ -51,11 +52,21 @@ void ProcessusMap::exec()
                 }
             }
         }
-        else if (demande[1] == BOUGER_CHASSEUR)
+        else if (demande[1] == Processus::BOUGER_CHASSEUR)
         {
             ResultatBouger res = map.bougerChasseur(lireCase(demande[2]), lireCase(demande[3]));
             traiterResultatBouger(s, demande, res);
         }
+		else if (demande[1] == Processus::MIAULEMENT)
+		{
+			for (Rat r : rats) 
+			{
+				if (r.etat != ARRETER) 
+				{
+					mpi.envoyer(demande[0] + SEPARATEUR + Processus::MIAULEMENT + SEPARATEUR + demande[2], r.processus, TAG_REQUETE);
+				}
+			}
+		}
         std::cout << map.toString() << std::endl;
     }
     for (int i = 1; i < mpi.obtenirNbProcs(); ++i)
@@ -74,7 +85,7 @@ void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string>
     switch (res)
     {
     case ResultatBouger::RIEN:
-        mpi.envoyer(demande[0] + SEPARATEUR + "impossible", stoi(demande[0]), TAG_REQUETE);
+        mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[2] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
         break;
     case ResultatBouger::BOUGER_RAT:
     {
@@ -91,18 +102,18 @@ void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string>
             }
         }
         mpi.envoyer(Processus::ARRETER, dest, TAG_ARRETER);
-        envoyerATous(s);
+        envoyerATous(demande[0] + SEPARATEUR + Processus::CAPTURER_RAT + SEPARATEUR + map.toString());
     }
         break;
     case ResultatBouger::BOUGER_SORTIE:
         mpi.envoyer(Processus::ARRETER,stoi(demande[0]),TAG_ARRETER);
-        envoyerATous(s);
+		envoyerATous(demande[0] + SEPARATEUR + Processus::SORTI_RAT + SEPARATEUR + map.toString());
         break;
     case ResultatBouger::BOUGER_FROMAGE:
-        envoyerATous(s);
+        envoyerATous(demande[0] + SEPARATEUR + Processus::MANGER_FROMAGE + SEPARATEUR + map.toString());
         break;
     case ResultatBouger::BOUGER_CASE_VIDE:
-        envoyerATous(s);
+		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString() , stoi(demande[0]), TAG_REQUETE);
         break;
     }
 }
