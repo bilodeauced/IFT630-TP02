@@ -54,7 +54,7 @@ int AStar:: findPath(string role, vector<char> map) {
 		if (currentNode.idx == goal_node.idx)
 			return findNextMove(currentNode);
 
-		for (int walkablePosition : getWalkableNeibors(role, currentNode.idx)) {
+		for (int walkablePosition : getWalkableNeighbors(role, currentNode.idx)) {
 			float currentHeuristic = heuristic(currentNode.idx / width, currentNode.idx % width, goal / width, goal % width);
 			float walkableHeuristic = heuristic(walkablePosition / width, walkablePosition % width, goal / width, goal % width);
 
