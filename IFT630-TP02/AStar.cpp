@@ -102,7 +102,7 @@ public:
 		}
 	}
 
-	 vector<int> getWalkableNeibors(string role, int currentPos) {
+	 vector<int> getWalkableNeibors(string role, int currentPos, vector<char>& map) {
 		 vector<int> neibors;
 		 // Up
 		 if (currentPos / width > 0) neibors.push_back(currentPos - width);
@@ -123,6 +123,10 @@ public:
 			 // Down-Left
 			 if (currentPos / width + 1 < height && currentPos % width + 1 < width) neibors.push_back(currentPos + width + 1);
 		 }
+
+		 for (int neibor : neibors)
+			 if (map.at(neibor) == '#') neibors.erase(neibors.begin() + neibor);
+		
 		 return neibors;
 	 }
 
