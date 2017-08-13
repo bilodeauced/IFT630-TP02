@@ -1,4 +1,3 @@
-
 #include "AStar.h"
 
 using namespace std;
@@ -140,6 +139,10 @@ int AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vect
 	}
 
 	return bestNode.idx;
+}
+
+int AStar::getCostToGoal() {
+	return costToGoal;
 }
 
 

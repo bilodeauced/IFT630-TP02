@@ -27,6 +27,7 @@ class AStar {
 private:
 	int height;
 	int width;
+	int costToGoal;
 
 	Node findPath(string role, vector<char> map, int start, int goal);
 	Node findNextMove(Node& currentNode);
@@ -36,6 +37,7 @@ private:
 public:
 	AStar(int height, int width, int start, int goal);
 	int findNextMoveToBestGoal(string role, vector<char> map, int start, vector<int> goals);
+	int getCostToGoal();
 };
 
 #endif
