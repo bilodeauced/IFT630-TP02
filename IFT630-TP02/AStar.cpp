@@ -1,4 +1,3 @@
-
 #include "AStar.h"
 
 using namespace std;
@@ -19,11 +18,9 @@ float heuristic(int i0, int j0, int i1, int j1) {
 AStar::AStar(int height, int width, int start, int goal) {
 	this->height = height;
 	this->width = width;
-	this->start = start;
-	this->goal = goal;
 }
 
-int AStar:: findPath(string role, vector<char> map) {
+Node AStar::findPath(string role, vector<char> map, int start, int goal) {
 
 	const float INF = std::numeric_limits<float>::infinity();
 	Node start_node(start, 0.);
@@ -44,7 +41,7 @@ int AStar:: findPath(string role, vector<char> map) {
 	while (true)
 	{
 		if (nodes_to_visit.empty())
-			return -1;
+			return Node(-1, -1);
 
 
 		Node currentNode = nodes_to_visit.front();
@@ -54,7 +51,7 @@ int AStar:: findPath(string role, vector<char> map) {
 		if (currentNode.idx == goal_node.idx)
 			return findNextMove(currentNode);
 
-		for (int walkablePosition : getWalkableNeighbors(role, currentNode.idx)) {
+		for (int walkablePosition : getWalkableNeighbors(role, currentNode.idx, map)) {
 			float currentHeuristic = heuristic(currentNode.idx / width, currentNode.idx % width, goal / width, goal % width);
 			float walkableHeuristic = heuristic(walkablePosition / width, walkablePosition % width, goal / width, goal % width);
 
@@ -88,7 +85,7 @@ int AStar:: findPath(string role, vector<char> map) {
 }
 
 vector<int> AStar::getWalkableNeighbors(string role, int currentPos, vector<char>& map) {
-vector<int> neighbors;
+	vector<int> neighbors;
 	// Up
 	if (currentPos / width > 0) neighbors.push_back(currentPos - width);
 	// Right
@@ -122,13 +119,31 @@ int AStar::findNodePosition(vector<Node>& v, Node& n) {
 	return -1;
 }
 
-int AStar::findNextMove(Node& currentNode) {
+Node AStar::findNextMove(Node& currentNode) {
 	if (currentNode.parent)
 		findNextMove(*currentNode.parent);
 	else
-		return currentNode.idx;
+		return currentNode;
+
+	return Node(-1, -1);
 }
-};
+
+
+int AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vector<int> goals) {
+	Node bestNode;
+	for (int goal : goals) {
+		Node currentNode = findPath(role, map, start, goal);
+
+		if (currentNode.cost < bestNode.cost)
+			bestNode = currentNode;
+	}
+
+	return bestNode.idx;
+}
+
+int AStar::getCostToGoal() {
+	return costToGoal;
+}
 
 
 

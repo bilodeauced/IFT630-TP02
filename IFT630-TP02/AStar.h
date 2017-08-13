@@ -18,25 +18,26 @@ public:
 	Node* parent; // Pointer to the parent node
 
 	Node(int i, float c) : idx(i), cost(c), parent(nullptr) {}
+	Node() : idx(-1), cost(01), parent(nullptr) {}
 
 };
 
 class AStar {
 
 private:
-	float* weights;
 	int height;
 	int width;
-	int start;
-	int goal;
+	int costToGoal;
+
+	Node findPath(string role, vector<char> map, int start, int goal);
+	Node findNextMove(Node& currentNode);
+	vector<int> getWalkableNeighbors(string role, int currentPos, vector<char>& map);
+	int findNodePosition(vector<Node>& v, Node& n);
 
 public:
 	AStar(int height, int width, int start, int goal);
-	int findPath(string role, vector<char> map);
-	vector<int> getWalkableNeighbors(string role, int currentPos, vector<char>& map);
-	int findNodePosition(vector<Node>& v, Node& n);
-	int findNextMove(Node& currentNode);
+	int findNextMoveToBestGoal(string role, vector<char> map, int start, vector<int> goals);
+	int getCostToGoal();
 };
-
 
 #endif
