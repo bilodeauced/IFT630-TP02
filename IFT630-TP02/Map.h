@@ -37,6 +37,7 @@ public:
 
     static Map creerMapViaFichier(std::string && nomFichier);
     static Map creerMap(std::string && stringDeCases);
+	void updateMap(std::string && stringDeCases);
     char& operator()(int x, int y); // conditon : x <= maxX, y <= maxY
     char& operator()(Case c); // conditon : x <= maxX, y <= maxY
     const int obtenirMaxX();

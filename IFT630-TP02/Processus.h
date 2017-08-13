@@ -7,12 +7,17 @@
 #include <sstream>
 
 struct Processus {
-    const std::string BOUGER_RAT = "bougerRat";
-    const std::string BOUGER_CHASSEUR = "bougerChasseur";
-    const std::string MIAULEMENT = "miaulement";
-    const std::string ARRETER = "arreter";
-    const std::string PRET = "pret";
-    const std::string COMMENCER = "commencer";
+	const std::string BOUGER = "bouger";
+	const std::string BOUGER_RAT = "bougerRat";
+	const std::string BOUGER_CHASSEUR = "bougerChasseur";
+	const std::string CAPTURER_RAT = "capturerRat";
+	const std::string SORTI_RAT = "capturerRat";
+	const std::string MANGER_FROMAGE = "mangerFromage";
+	const std::string MIAULEMENT = "miaulement";
+	const std::string ARRETER = "arreter";
+	const std::string PRET = "pret";
+	const std::string COMMENCER = "commencer";
+
     const char SEPARATEUR = '|';
     const char SEPARATEUR_CASE = ',';
 

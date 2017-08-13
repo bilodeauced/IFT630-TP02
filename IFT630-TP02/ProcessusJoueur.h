@@ -8,6 +8,7 @@ protected:
     ProcessusJoueur(MpiContext& mpi, Map map, Case c);
     Case c;
     bool lireMessage();    // return false si doit arreter
+	void attendreDemarrage();
 };
 
 
