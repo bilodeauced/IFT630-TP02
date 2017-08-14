@@ -2,10 +2,10 @@
 #define PROCESSUS_MAP_H
 
 #include "Processus.h"
+#include "Log.h"
 #include <cstdlib>
 
 struct ProcessusMap : Processus {
-    struct Rat;
     ProcessusMap(MpiContext& mpi, Map map);
 protected:
     void exec();
@@ -22,6 +22,7 @@ private:
         Rat(int processus, Case c);
     };
     std::vector<Rat> rats;
+    Log log;
     void traiterResultatBouger(std::string s, std::vector<std::string> demande, ResultatBouger res);
 };
 

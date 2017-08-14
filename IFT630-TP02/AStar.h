@@ -36,8 +36,7 @@ private:
 	int findNodePosition(vector<Node>& v, Node& n);
 
 public:
-	AStar(int height, int width);
-	
+	AStar(int height, int width);	
 	Case findNextMoveToBestGoal(string role, vector<char> map, Case start, vector<Case> goals);
 	int getCostToGoal();
 };

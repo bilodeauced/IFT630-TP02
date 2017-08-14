@@ -145,7 +145,7 @@ Case AStar::findNextMoveToBestGoal(string role, vector<char> map, Case start, ve
 			bestNode = currentNode;
 	}
 	// retourner un tuple avec bestNode.cost (les chasseurs en on de besoin pour miaulement
-
+	costToGoal = bestNode.cost;
 	return Case(bestNode.idx % width, bestNode.idx / height);
 }
 

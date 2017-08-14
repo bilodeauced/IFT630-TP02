@@ -6,7 +6,7 @@ ProcessusMap::Rat::Rat(int processus, Case c) : processus{ processus }, c{ c }, 
 
 // struct ProcessusMap
 
-ProcessusMap::ProcessusMap(MpiContext& mpi, Map map) : Processus{ mpi,map }
+ProcessusMap::ProcessusMap(MpiContext& mpi, Map map) : Processus{ mpi,map }, log{ mpi.obtenirNbProcs() }
 {
     std::vector<Case> caseRat = map.trouver(Map::CASE_RAT);
     for (int i = 0; i < caseRat.size(); ++i)
@@ -41,6 +41,7 @@ void ProcessusMap::pret()
 
 void ProcessusMap::exec()
 {
+    log.commencer(map);
     std::cout << map.toString() << std::endl;
     while (!map.trouver(Map::CASE_FROMAGE).empty() && !map.trouver(Map::CASE_RAT).empty())
     {
@@ -69,7 +70,7 @@ void ProcessusMap::exec()
             traiterResultatBouger(s, demande, res);
         }
 		else if (demande[1] == Processus::MIAULEMENT)
-		{
+		{           
 			for (Rat r : rats) 
 			{
 				if (r.etat != ARRETER) 
@@ -77,8 +78,10 @@ void ProcessusMap::exec()
 					mpi.envoyer(demande[0] + SEPARATEUR + Processus::MIAULEMENT + SEPARATEUR + demande[2], r.processus, TAG_REQUETE);
 				}
 			}
+            log.ajouterMiaulement(stoi(demande[0]), lireCase(demande[2]));
 		}
         std::cout << map.toString() << std::endl;
+        log.prendrePhotoMap(map);
     }
     for (int i = 1; i < mpi.obtenirNbProcs(); ++i)
     {
@@ -90,13 +93,18 @@ void ProcessusMap::exec()
     }
     std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
     std::cout << map.toString() << std::endl;
+    log.finir(map);
+    std::cout << log.toString() << std::endl;
+    log.ecrireDansFichier();
 }
 
 void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string> demande, ResultatBouger res) {
+    log.ajouterRequeteMouvement(stoi(demande[0]));
     switch (res)
     {
     case ResultatBouger::RIEN:
         mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[2] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
+        log.ajouterRequeteMouvementRejeter(stoi(demande[0]));
         break;
     case ResultatBouger::BOUGER_RAT:
     {
@@ -114,13 +122,16 @@ void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string>
         }
         mpi.envoyer(Processus::ARRETER, dest, TAG_ARRETER);
 		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
+        log.ajouterRatAttraper(stoi(demande[0]), dest, nC);
     }
         break;
     case ResultatBouger::BOUGER_SORTIE:
         mpi.envoyer(Processus::ARRETER,stoi(demande[0]),TAG_ARRETER);
+        log.ajouterRatSorti(stoi(demande[0]), lireCase(demande[3]));
         break;
     case ResultatBouger::BOUGER_FROMAGE:
 		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
+        log.ajouterMangerFromage(stoi(demande[0]), lireCase(demande[3]));
 		break;
     case ResultatBouger::BOUGER_CASE_VIDE:
 		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString() , stoi(demande[0]), TAG_REQUETE);
