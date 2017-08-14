@@ -15,7 +15,7 @@ float heuristic(int i0, int j0, int i1, int j1) {
 	return std::abs(i0 - i1) + std::abs(j0 - j1);
 }
 
-AStar::AStar(int height, int width, int start, int goal) {
+AStar::AStar(int height, int width, int start) {
 	this->height = height;
 	this->width = width;
 }
@@ -145,7 +145,7 @@ Case AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vec
 			bestNode = currentNode;
 	}
 	// retourner un tuple avec bestNode.cost (les chasseurs en on de besoin pour miaulement
-
+	costToGoal = bestNode.cost;
 	return Case(bestNode.idx % width, bestNode.idx / height);
 }
 
