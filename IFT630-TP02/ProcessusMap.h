@@ -2,7 +2,7 @@
 #define PROCESSUS_MAP_H
 
 #include "Processus.h"
-
+#include <cstdlib>
 
 struct ProcessusMap : Processus {
     struct Rat;
@@ -23,7 +23,6 @@ private:
     };
     std::vector<Rat> rats;
     void traiterResultatBouger(std::string s, std::vector<std::string> demande, ResultatBouger res);
-    void envoyerATous(const std::string& s);
 };
 
 

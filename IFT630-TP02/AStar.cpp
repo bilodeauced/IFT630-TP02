@@ -128,23 +128,27 @@ Node AStar::findNextMove(Node& currentNode) {
 	return Node(-1, -1);
 }
 
+Case AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vector<Case> goalsCoords) {
+	vector<int> goals;
+	for (Case coords: goalsCoords)
+	{
+		goals.push_back(coords.y * height + coords.x);
+	}
 
-int AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vector<int> goals) {
 	Node bestNode;
+	// goals doit être ordonné selon l'heuristique d'avance
 	for (int goal : goals) {
+		// le meilleur score doit être envoyé ici pour arrêter d'avance
 		Node currentNode = findPath(role, map, start, goal);
-
+		
 		if (currentNode.cost < bestNode.cost)
 			bestNode = currentNode;
 	}
+	// retourner un tuple avec bestNode.cost (les chasseurs en on de besoin pour miaulement
 
-	return bestNode.idx;
+	return Case(bestNode.idx % width, bestNode.idx / height);
 }
 
 int AStar::getCostToGoal() {
 	return costToGoal;
 }
-
-
-
-

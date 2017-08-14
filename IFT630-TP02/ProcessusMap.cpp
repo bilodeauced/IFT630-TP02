@@ -22,10 +22,21 @@ void ProcessusMap::pret()
         mpi.recevoir(i, 0);
     }
     std::cout << mpi.obtenirRang() << " : commencer" << std::endl;
-    for (int i = 1; i < mpi.obtenirNbProcs(); ++i)
+
+	const std::string mapString = map.toString();
+	std::vector<Case> caseRat = map.trouver(Map::CASE_RAT);
+	std::vector<Case> caseChasseur = map.trouver(Map::CASE_CHASSEUR_RAT);
+
+	int decalage = 1;
+    for (int i = 0; i < caseRat.size(); ++i)
     {
-        mpi.envoyer(COMMENCER, i, 1);
+        mpi.envoyer(std::to_string(caseRat.at(i).x) + SEPARATEUR_CASE + std::to_string(caseRat.at(i).y) + SEPARATEUR + mapString, decalage + i, TAG_COMMENCER);
     }
+	decalage += caseRat.size();
+	for (int i = 0; i < caseChasseur.size(); ++i)
+	{
+		mpi.envoyer(std::to_string(caseChasseur.at(i).x) + SEPARATEUR_CASE + std::to_string(caseChasseur.at(i).y) + SEPARATEUR + mapString, decalage + i, TAG_COMMENCER);
+	}
 }
 
 void ProcessusMap::exec()
@@ -102,26 +113,17 @@ void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string>
             }
         }
         mpi.envoyer(Processus::ARRETER, dest, TAG_ARRETER);
-        envoyerATous(demande[0] + SEPARATEUR + Processus::CAPTURER_RAT + SEPARATEUR + map.toString());
+		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
     }
         break;
     case ResultatBouger::BOUGER_SORTIE:
         mpi.envoyer(Processus::ARRETER,stoi(demande[0]),TAG_ARRETER);
-		envoyerATous(demande[0] + SEPARATEUR + Processus::SORTI_RAT + SEPARATEUR + map.toString());
         break;
     case ResultatBouger::BOUGER_FROMAGE:
-        envoyerATous(demande[0] + SEPARATEUR + Processus::MANGER_FROMAGE + SEPARATEUR + map.toString());
-        break;
+		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);
+		break;
     case ResultatBouger::BOUGER_CASE_VIDE:
 		mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString() , stoi(demande[0]), TAG_REQUETE);
         break;
-    }
-}
-
-void ProcessusMap::envoyerATous(const std::string& s)
-{
-    for (int i = 1; i < mpi.obtenirNbProcs(); ++i)
-    {
-        mpi.envoyer(s, i, TAG_REQUETE);
     }
 }

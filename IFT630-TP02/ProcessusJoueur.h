@@ -9,6 +9,7 @@ protected:
     Case c;
     bool lireMessage();    // return false si doit arreter
 	void attendreDemarrage();
+	void pret();
 };
 
 

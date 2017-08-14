@@ -6,11 +6,10 @@ ProcessusRat::ProcessusRat(MpiContext& mpi, Map map, Case c) : ProcessusJoueur{ 
 
 void ProcessusRat::exec()
 {
-	attendreDemarrage();
     do
     {
         mpi.envoyer(requeteBouger(BOUGER_RAT, c, Case{ c.x + 1,c.y + 1 }), 0, TAG_REQUETE);
     } while (lireMessage());
-    mpi.envoyer("arrete", 0, TAG_ARRETER);
-    std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
+    //mpi.envoyer("arrete", 0, TAG_ARRETER);
+    //std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
 }

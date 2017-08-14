@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include "Map.h"
 
 using namespace std;
 
@@ -36,7 +37,8 @@ private:
 
 public:
 	AStar(int height, int width, int start, int goal);
-	int findNextMoveToBestGoal(string role, vector<char> map, int start, vector<int> goals);
+	
+	Case findNextMoveToBestGoal(string role, vector<char> map, int start, vector<Case> goals);
 	int getCostToGoal();
 };
 

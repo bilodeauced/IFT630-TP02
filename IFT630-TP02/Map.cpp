@@ -10,7 +10,7 @@ Map::Map(std::vector<char> cases, int maxX, int maxY) :
     cases{ cases }, maxX{ maxX }, maxY{ maxY }
 { }
 
-Map  Map::creerMapViaFichier(std::string && nomFichier)
+Map Map::creerMapViaFichier(std::string && nomFichier)
 {
     std::string s{ };
     std::copy(std::istreambuf_iterator<char>(std::ifstream{ nomFichier }),
@@ -20,7 +20,7 @@ Map  Map::creerMapViaFichier(std::string && nomFichier)
     return creerMap(std::move(s));
 }
 
-Map  Map::creerMap(std::string && stringDeCases)
+Map Map::creerMap(std::string && stringDeCases)
 {
     int pos = stringDeCases.find_first_of('\n');
     if (pos == -1) { throw; }
