@@ -2,12 +2,13 @@
 #define PROCESSUS_JOUEUR_H
 
 #include "Processus.h"
+#include "AStar.h"
 
 struct ProcessusJoueur : Processus {
 protected:
-    ProcessusJoueur(MpiContext& mpi, Map map, Case c);
     Case c;
-    bool lireMessage();    // return false si doit arreter
+	AStar astar;
+    ProcessusJoueur(MpiContext& mpi, Map map, Case c);
 	void attendreDemarrage();
 	void pret();
 };

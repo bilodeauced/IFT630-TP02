@@ -7,6 +7,7 @@ struct ProcessusChasseur : ProcessusJoueur {
     ProcessusChasseur(MpiContext& mpi, Map map, Case c);
 protected:
     void exec();
+	bool lireMessage();    // return false si doit arreter
 };
 
 #endif 

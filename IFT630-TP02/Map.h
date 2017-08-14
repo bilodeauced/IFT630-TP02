@@ -34,6 +34,7 @@ public:
     static const char CASE_RAT;
     static const char CASE_CHASSEUR_RAT;
     static const char CASE_FROMAGE;
+	static const char CASE_SORTIE;
 
     static Map creerMapViaFichier(std::string && nomFichier);
     static Map creerMap(std::string && stringDeCases);
@@ -42,6 +43,7 @@ public:
     char& operator()(Case c); // conditon : x <= maxX, y <= maxY
     const int obtenirMaxX();
     const int obtenirMaxY();
+	const std::vector<char> obtenirMap();
     ResultatBouger bougerRat(Case c, Case nC);
     ResultatBouger bougerChasseur(Case c, Case nC);
     std::vector<Case> trouver(char c);

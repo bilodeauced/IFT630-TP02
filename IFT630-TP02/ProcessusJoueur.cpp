@@ -1,34 +1,7 @@
 #include "ProcessusJoueur.h"
 
-ProcessusJoueur::ProcessusJoueur(MpiContext & mpi, Map map, Case c) : Processus{ mpi,map }, c{ c }
+ProcessusJoueur::ProcessusJoueur(MpiContext & mpi, Map map, Case c) : Processus{ mpi,map }, c{ c }, astar(map.obtenirMaxX(), map.obtenirMaxY())
 { }
-
-bool ProcessusJoueur::lireMessage()
-{
-    std::string message;
-    std::vector<std::string> demande;
-
-	message = mpi.recevoirToutTag(0);
-    demande = split(message,SEPARATEUR);
-	if (demande.size() > 1)
-	{
-		if (demande[1] == BOUGER)
-		{
-			c = lireCase(demande[2]);
-			map.updateMap(std::move(demande[3]));
-		}
-		else if (demande[1] == MIAULEMENT) 
-		{
-			// change rat mode
-		}
-    }
-
-    if (message == ARRETER) {
-        // le procesus doit arreter
-        return false;
-    }
-	return true;
-}
 
 void ProcessusJoueur::attendreDemarrage() 
 {

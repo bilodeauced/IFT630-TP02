@@ -5,6 +5,8 @@ const char Map::CASE_MUR = '#';
 const char Map::CASE_RAT = 'R';
 const char Map::CASE_CHASSEUR_RAT = 'C';
 const char Map::CASE_FROMAGE = 'F';
+const char Map::CASE_SORTIE = 'S';
+
 
 Map::Map(std::vector<char> cases, int maxX, int maxY) :
     cases{ cases }, maxX{ maxX }, maxY{ maxY }
@@ -59,6 +61,11 @@ const int Map::obtenirMaxX()
 const int Map::obtenirMaxY()
 {
     return maxY;
+}
+
+const std::vector<char> Map::obtenirMap()
+{
+	return cases;
 }
 
 char& Map::operator()(int x, int y)
@@ -151,16 +158,41 @@ std::vector<Case> Map::trouver(char charac)
 {
     std::vector<Case> cases{ };
     Case c{ 0,0 };
-    for (;c.x < maxX; ++c.x)
-    {
-        for (c.y = 0; c.y < maxY; ++c.y)
-        {
-            if (operator()(c) == charac) 
-            {
-                cases.push_back(c);
-            }
-        }
-    }
+	if (charac != Map::CASE_SORTIE)
+	{
+		for (; c.x < maxX; ++c.x)
+		{
+			for (c.y = 0; c.y < maxY; ++c.y)
+			{
+				if (operator()(c) == charac)
+				{
+					cases.push_back(c);
+				}
+			}
+		}
+	}
+	else 
+	{
+		for (; c.x < maxX; ++c.x)
+		{
+			c.y = 0;
+			if (operator()(c) == ' ')
+				cases.push_back(c);
+			c.y = maxY;
+			if (operator()(c) == ' ')
+				cases.push_back(c);
+		}
+
+		for (c.y = 1; c.y < maxY - 1; ++c.y)
+		{
+			c.x = 0;
+			if (operator()(c) == ' ')
+				cases.push_back(c);
+			c.x = maxX;
+			if (operator()(c) == ' ')
+				cases.push_back(c);
+		}
+	}
     return cases;
 }
 

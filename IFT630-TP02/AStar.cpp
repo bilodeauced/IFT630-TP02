@@ -15,7 +15,7 @@ float heuristic(int i0, int j0, int i1, int j1) {
 	return std::abs(i0 - i1) + std::abs(j0 - j1);
 }
 
-AStar::AStar(int height, int width, int start, int goal) {
+AStar::AStar(int height, int width) {
 	this->height = height;
 	this->width = width;
 }
@@ -128,7 +128,7 @@ Node AStar::findNextMove(Node& currentNode) {
 	return Node(-1, -1);
 }
 
-Case AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vector<Case> goalsCoords) {
+Case AStar::findNextMoveToBestGoal(string role, vector<char> map, Case start, vector<Case> goalsCoords) {
 	vector<int> goals;
 	for (Case coords: goalsCoords)
 	{
@@ -139,7 +139,7 @@ Case AStar::findNextMoveToBestGoal(string role, vector<char> map, int start, vec
 	// goals doit être ordonné selon l'heuristique d'avance
 	for (int goal : goals) {
 		// le meilleur score doit être envoyé ici pour arrêter d'avance
-		Node currentNode = findPath(role, map, start, goal);
+		Node currentNode = findPath(role, map, start.y * height + start.x, goal);
 		
 		if (currentNode.cost < bestNode.cost)
 			bestNode = currentNode;
