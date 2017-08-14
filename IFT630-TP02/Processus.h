@@ -6,9 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-struct Processus {
-	enum ID_MESSAGE{ BOUGER, BOUGER_RAT};
-	
+struct Processus {	
 	const std::string BOUGER = "bouger";
 	const std::string BOUGER_RAT = "bougerRat";
 	const std::string BOUGER_CHASSEUR = "bougerChasseur";
