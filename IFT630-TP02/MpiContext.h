@@ -3,6 +3,7 @@
 
 #include <mpi.h>
 #include <string>
+#include <iostream>
 
 class MpiContext {
     int nbProcs;

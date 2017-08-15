@@ -1,6 +1,6 @@
 #include "ProcessusJoueur.h"
 
-ProcessusJoueur::ProcessusJoueur(MpiContext & mpi, Map map, Case c) : Processus{ mpi,map }, c{ c }, astar(map.obtenirMaxX(), map.obtenirMaxY())
+ProcessusJoueur::ProcessusJoueur(MpiContext & mpi, Map map, Case c) : Processus{ mpi,map }, c{ c }, astar(map.obtenirMaxY(), map.obtenirMaxX())
 { }
 
 void ProcessusJoueur::attendreDemarrage() 

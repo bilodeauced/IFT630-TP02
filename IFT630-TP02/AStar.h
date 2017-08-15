@@ -19,7 +19,7 @@ public:
 	Node* parent; // Pointer to the parent node
 
 	Node(int i, float c) : idx(i), cost(c), parent(nullptr) {}
-	Node() : idx(-1), cost(01), parent(nullptr) {}
+	Node() : idx(-1), cost(std::numeric_limits<float>::max()), parent(nullptr) {}
 
 };
 
@@ -30,11 +30,10 @@ private:
 	int width;
 	int costToGoal;
 
-	Node findPath(string role, vector<char> map, int start, int goal);
-	Node findNextMove(Node& currentNode);
+	Node* findPath(string role, vector<char> map, int start, int goal);
+	Node* findNextMove(Node* currentNode);
 	vector<int> getWalkableNeighbors(string role, int currentPos, vector<char>& map);
-	int findNodePosition(vector<Node>& v, Node& n);
-
+	int findNodePosition(vector<Node*>& v, Node* n);
 public:
 	AStar(int height, int width);	
 	Case findNextMoveToBestGoal(string role, vector<char> map, Case start, vector<Case> goals);

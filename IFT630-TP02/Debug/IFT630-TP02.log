@@ -1,0 +1,6 @@
+﻿  ProcessusMap.cpp
+d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(12): warning C4018: '<': signed/unsigned mismatch
+d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(32): warning C4018: '<': signed/unsigned mismatch
+d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(37): warning C4018: '<': signed/unsigned mismatch
+  IFT630-TP02.vcxproj -> D:\git\IFT630-TP02\IFT630-TP02\Debug\IFT630-TP02.exe
+  IFT630-TP02.vcxproj -> D:\git\IFT630-TP02\IFT630-TP02\Debug\IFT630-TP02.pdb (Partial PDB)

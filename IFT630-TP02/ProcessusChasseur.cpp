@@ -5,16 +5,24 @@ ProcessusChasseur::ProcessusChasseur(MpiContext& mpi, Map map, Case c) : Process
 
 void ProcessusChasseur::exec()
 {
+    cout << mpi.obtenirRang() << ": exec " << endl;
     do
     {
-		Case dest = astar.findNextMoveToBestGoal("chasseur", map.obtenirMap(), c, map.trouver(Map::CASE_RAT));
+        cout << mpi.obtenirRang() << ": avant a* " << endl;
+        Case dest;
+        if (!map.trouver(Map::CASE_RAT).empty())
+		    dest = astar.findNextMoveToBestGoal("chasseur", map.obtenirMap(), c, map.trouver(Map::CASE_RAT));
+        cout << mpi.obtenirRang() << ": apres a* " << endl;
 		if (astar.getCostToGoal() <= 10)
 		{
+            cout << mpi.obtenirRang() << ": avant envoyer " << endl;
 			stringstream ss;
 			ss << mpi.obtenirRang() << SEPARATEUR << MIAULEMENT << SEPARATEUR << c.x << SEPARATEUR_CASE << c.y;
 			mpi.envoyer(ss.str(), 0, TAG_REQUETE);
+            cout << mpi.obtenirRang() << ": envoyer " << endl;
 		}
-        mpi.envoyer(requeteBouger(BOUGER_CHASSEUR, c, dest), 0, TAG_REQUETE);
+        if (!map.trouver(Map::CASE_RAT).empty())
+            mpi.envoyer(requeteBouger(BOUGER_CHASSEUR, c, dest), 0, TAG_REQUETE);
     } while (lireMessage());
     mpi.envoyer("arrete", 0, TAG_ARRETER);
     std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
@@ -22,7 +30,7 @@ void ProcessusChasseur::exec()
 
 bool ProcessusChasseur::lireMessage()
 {
-	string message = mpi.recevoir(0, 0);
+	string message = mpi.recevoirToutTag(0);
 	vector<string> demande = split(message, SEPARATEUR);
 
 	if (message == ARRETER) return false;

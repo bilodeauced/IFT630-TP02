@@ -29,7 +29,7 @@ void MpiContext::envoyer(const std::string & msg, int dest, int msgTag)
 
 std::string MpiContext::recevoir(int emetteur, int msgTag)
 {
-    enum  { BUFSIZE = 256 };
+    enum  { BUFSIZE = 4096 };
     char buff[BUFSIZE];
     MPI_Status stat;
     MPI_Recv(buff, BUFSIZE, MPI_CHAR, emetteur, msgTag, MPI_COMM_WORLD, &stat);

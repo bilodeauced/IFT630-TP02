@@ -115,7 +115,7 @@ ResultatBouger Map::bougerRat(Case c, Case nC)
     {
         char tmp = operator()(nC);
         operator()(c) = CASE_VIDE;
-        if (nC.x == 0 || nC.y == 0 || nC.x == maxX || nC.x == maxY) // SORTIE
+        if (nC.x == 0 || nC.y == 0 || nC.x == maxX || nC.y == maxY) // SORTIE
         {
             operator()(nC) = CASE_VIDE;
             return BOUGER_SORTIE;

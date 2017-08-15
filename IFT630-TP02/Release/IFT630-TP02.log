@@ -1,0 +1,27 @@
+﻿  AStar.cpp
+AStar.cpp(15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+AStar.cpp(152): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Log.cpp
+  Main.cpp
+  Map.cpp
+  MpiContext.h
+  MpiContext.cpp
+  Processus.cpp
+  ProcessusChasseur.cpp
+  ProcessusFactory.cpp
+  ProcessusJoueur.cpp
+  ProcessusMap.cpp
+ProcessusMap.cpp(12): warning C4018: '<': signed/unsigned mismatch
+ProcessusMap.cpp(31): warning C4018: '<': signed/unsigned mismatch
+ProcessusMap.cpp(36): warning C4018: '<': signed/unsigned mismatch
+  ProcessusRat.cpp
+Release\MpiContext.obj : warning LNK4042: object specified more than once; extras ignored
+Main.obj : error LNK2001: unresolved external symbol "public: __thiscall MpiContext::~MpiContext(void)" (??1MpiContext@@QAE@XZ)
+Main.obj : error LNK2001: unresolved external symbol "public: __thiscall MpiContext::MpiContext(int,char * * const)" (??0MpiContext@@QAE@HQAPAD@Z)
+Processus.obj : error LNK2001: unresolved external symbol "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __thiscall MpiContext::recevoir(int,int)" (?recevoir@MpiContext@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z)
+Processus.obj : error LNK2001: unresolved external symbol "public: void __thiscall MpiContext::envoyer(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,int)" (?envoyer@MpiContext@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z)
+Processus.obj : error LNK2001: unresolved external symbol "public: int __thiscall MpiContext::obtenirRang(void)" (?obtenirRang@MpiContext@@QAEHXZ)
+ProcessusJoueur.obj : error LNK2001: unresolved external symbol "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __thiscall MpiContext::recevoirToutTag(int)" (?recevoirToutTag@MpiContext@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z)
+ProcessusMap.obj : error LNK2001: unresolved external symbol "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __thiscall MpiContext::recevoirToutEmetteur(int)" (?recevoirToutEmetteur@MpiContext@@QAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z)
+ProcessusMap.obj : error LNK2001: unresolved external symbol "public: int __thiscall MpiContext::obtenirNbProcs(void)" (?obtenirNbProcs@MpiContext@@QAEHXZ)
+D:\git\IFT630-TP02\IFT630-TP02\Release\IFT630-TP02.exe : fatal error LNK1120: 8 unresolved externals
