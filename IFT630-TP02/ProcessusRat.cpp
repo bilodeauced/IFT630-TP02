@@ -9,21 +9,17 @@ void ProcessusRat::exec()
     {
 		Case dest;
         if (tourAFuir == 0) {
-            std::cout << mpi.obtenirRang() << " avant a*" << std::endl; 
             if (!map.trouver(Map::CASE_FROMAGE).empty())
                 dest = astar.findNextMoveToBestGoal("rat", map.obtenirMap(), c, map.trouver(Map::CASE_FROMAGE));
         }
         else {
-            std::cout << mpi.obtenirRang() << " avant a*" << std::endl;
             dest = astar.findNextMoveToBestGoal("rat", map.obtenirMap(), c, map.trouver(Map::CASE_SORTIE));
         }
-        std::cout << mpi.obtenirRang() << " apres a*" << std::endl;
         if (!map.trouver(Map::CASE_FROMAGE).empty())
             mpi.envoyer(requeteBouger(BOUGER_RAT, c, dest), 0, TAG_REQUETE);
         if (tourAFuir != 0) --tourAFuir;
     } while (lireMessage());
     mpi.envoyer("arrete", 0, TAG_ARRETER);
-    std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
 }
 
 bool ProcessusRat::lireMessage()

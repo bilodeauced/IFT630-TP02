@@ -12,7 +12,6 @@ void Processus::executer()
 void Processus::pret()
 {
     mpi.envoyer(PRET, 0, TAG_PRET);
-    std::cout << mpi.obtenirRang() << " : pret" << std::endl;
     mpi.recevoir(0, TAG_COMMENCER);
 }
 

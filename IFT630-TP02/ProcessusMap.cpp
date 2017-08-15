@@ -13,7 +13,6 @@ ProcessusMap::ProcessusMap(MpiContext& mpi, Map map) : Processus{ mpi,map }, log
     {
         rats.push_back(Rat{ i + 1,caseRat[i] });
     }
-    std::cout << "caseRat.size():" << caseRat.size() << std::endl;
 }
 
 void ProcessusMap::pret()
@@ -22,7 +21,6 @@ void ProcessusMap::pret()
     {
         mpi.recevoir(i, 0);
     }
-    std::cout << mpi.obtenirRang() << " : commencer" << std::endl;
 
     const std::string mapString = map.toString();
     std::vector<Case> caseRat = map.trouver(Map::CASE_RAT);
@@ -43,13 +41,10 @@ void ProcessusMap::pret()
 void ProcessusMap::exec()
 {
     log.commencer(map);
-    std::cout << map.toString() << std::endl;
     while (!map.trouver(Map::CASE_FROMAGE).empty() && !map.trouver(Map::CASE_RAT).empty())
     {
-        std::cout << mpi.obtenirRang() << " : en attente" << std::endl;
         std::string s = mpi.recevoirToutEmetteur(TAG_REQUETE);
         std::vector<std::string> demande = split(s, SEPARATEUR);
-        std::cout << mpi.obtenirRang() << " : messageRecu : " << s << std::endl;
 
         if (demande[1] == Processus::BOUGER_RAT) {
             Case c = lireCase(demande[2]);
@@ -81,7 +76,6 @@ void ProcessusMap::exec()
             }
             log.ajouterMiaulement(stoi(demande[0]), lireCase(demande[2]));
         }
-        std::cout << map.toString() << std::endl;
         log.prendrePhotoMap(map);
     }
     for (int i = 1; i < mpi.obtenirNbProcs(); ++i)
@@ -92,8 +86,6 @@ void ProcessusMap::exec()
     {
         mpi.recevoir(i, TAG_ARRETER);
     }
-    std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
-    std::cout << map.toString() << std::endl;
     log.finir(map);
     std::cout << log.toString() << std::endl;
     log.ecrireDansFichier();
@@ -120,10 +112,8 @@ void ProcessusMap::traiterResultatBouger(std::string s, std::vector<std::string>
                 r.etat = Etat::ARRETER;
                 break;
             }
-            std::cout << r.processus  << ",etat(arreter=1):" << r.etat << ", pos :" << r.c.x << "," << r.c.y << std::endl;
         }
         if (dest != 0) {
-            std::cout << dest << " MORT LE RAT !" << std::endl;
             mpi.envoyer(Processus::ARRETER, dest, TAG_ARRETER);
         }
         mpi.envoyer(demande[0] + SEPARATEUR + Processus::BOUGER + SEPARATEUR + demande[3] + SEPARATEUR + map.toString(), stoi(demande[0]), TAG_REQUETE);

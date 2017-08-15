@@ -5,27 +5,21 @@ ProcessusChasseur::ProcessusChasseur(MpiContext& mpi, Map map, Case c) : Process
 
 void ProcessusChasseur::exec()
 {
-    cout << mpi.obtenirRang() << ": exec " << endl;
     do
     {
-        cout << mpi.obtenirRang() << ": avant a* " << endl;
         Case dest;
         if (!map.trouver(Map::CASE_RAT).empty())
 		    dest = astar.findNextMoveToBestGoal("chasseur", map.obtenirMap(), c, map.trouver(Map::CASE_RAT));
-        cout << mpi.obtenirRang() << ": apres a* " << endl;
 		if (astar.getCostToGoal() <= 10)
 		{
-            cout << mpi.obtenirRang() << ": avant envoyer " << endl;
 			stringstream ss;
 			ss << mpi.obtenirRang() << SEPARATEUR << MIAULEMENT << SEPARATEUR << c.x << SEPARATEUR_CASE << c.y;
 			mpi.envoyer(ss.str(), 0, TAG_REQUETE);
-            cout << mpi.obtenirRang() << ": envoyer " << endl;
 		}
         if (!map.trouver(Map::CASE_RAT).empty())
             mpi.envoyer(requeteBouger(BOUGER_CHASSEUR, c, dest), 0, TAG_REQUETE);
     } while (lireMessage());
     mpi.envoyer("arrete", 0, TAG_ARRETER);
-    std::cout << mpi.obtenirRang() << " : arreter" << std::endl;
 }
 
 bool ProcessusChasseur::lireMessage()

@@ -10,13 +10,11 @@ Processus* ProcessusFactory::creerProcesus(MpiContext& mpi, std::string nomFichi
     if (mpi.obtenirRang() < nbRat + 1)
     {
         Case c = map.trouver(Map::CASE_RAT)[mpi.obtenirRang() - 1];
-        std::cout << mpi.obtenirRang() << " est rat :" << c.x << " " << c.y << std::endl;
         return new ProcessusRat{ std::move(mpi), std::move(map), c };
     }
     if (mpi.obtenirRang() < nbRat + nbChasseur + 1)
     {
         Case c = map.trouver(Map::CASE_CHASSEUR_RAT)[mpi.obtenirRang() - nbRat - 1];
-        std::cout << mpi.obtenirRang() << " est chasseur de rat :" << c.x << " " << c.y << std::endl;
         return new ProcessusChasseur{ std::move(mpi), std::move(map), c };
     }
     throw;

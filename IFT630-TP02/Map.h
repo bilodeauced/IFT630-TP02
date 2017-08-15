@@ -5,7 +5,6 @@
 #include <iterator>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 struct Case {
     int x, y;

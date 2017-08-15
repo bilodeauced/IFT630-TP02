@@ -9,7 +9,6 @@ protected:
     Case c;
 	AStar astar;
     ProcessusJoueur(MpiContext& mpi, Map map, Case c);
-	void attendreDemarrage();
 	void pret();
 };
 

@@ -1,6 +1,26 @@
-﻿  ProcessusMap.cpp
+﻿  ProcessusRat.cpp
+  ProcessusMap.cpp
 d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(12): warning C4018: '<': signed/unsigned mismatch
-d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(32): warning C4018: '<': signed/unsigned mismatch
-d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(37): warning C4018: '<': signed/unsigned mismatch
+d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(30): warning C4018: '<': signed/unsigned mismatch
+d:\git\ift630-tp02\ift630-tp02\processusmap.cpp(35): warning C4018: '<': signed/unsigned mismatch
+  ProcessusJoueur.cpp
+  ProcessusFactory.cpp
+  ProcessusChasseur.cpp
+  Processus.cpp
+  MpiContext.cpp
+  MpiContext.h
+  Map.cpp
+  Main.cpp
+  Log.cpp
+  AStar.cpp
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(56): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(145): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(146): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+d:\git\ift630-tp02\ift630-tp02\astar.cpp(124): warning C4715: 'AStar::findNextMove': not all control paths return a value
+Debug\MpiContext.obj : warning LNK4042: object specified more than once; extras ignored
   IFT630-TP02.vcxproj -> D:\git\IFT630-TP02\IFT630-TP02\Debug\IFT630-TP02.exe
   IFT630-TP02.vcxproj -> D:\git\IFT630-TP02\IFT630-TP02\Debug\IFT630-TP02.pdb (Partial PDB)
